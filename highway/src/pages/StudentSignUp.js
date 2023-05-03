@@ -2,7 +2,7 @@ import { AutoComplete, Button, Checkbox, Form, Radio } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { CHECK_USER_ID_REQUEST } from "../constants/actionTypes";
+import { CHECK_USER_ID_REQUEST, SIGNUP_REQUEST } from "../constants/actionTypes";
 import {
   ButtonWrapper,
   CancelBtn,
@@ -23,12 +23,26 @@ import { useSelector } from "react-redux";
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   const [form] = Form.useForm();
-  const { idValid } = useSelector((state) => state.user);
 
   const onFinish = (values) => {
+    const body = {
+      userId : values.id,
+      userName : values.nickname,
+      password : values.password,
+      email : values.email,
+      gender : values.gender
+    }
+    console.log(values)
     console.log("회원가입 데이터: ", values);
+    dispatch({
+      type: SIGNUP_REQUEST,
+      data: body
+    })
+    navigate("/login")
   };
+
   const onCheckUserId = () => {
     const userIdValue = form.getFieldValue("id");
     console.log(userIdValue);
