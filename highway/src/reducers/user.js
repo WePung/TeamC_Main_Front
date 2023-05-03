@@ -9,6 +9,9 @@ import {
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
 } from "../constants/actionTypes";
 
 export const initalState = {
@@ -21,6 +24,9 @@ export const initalState = {
   signUpLoading: false, // 회원가입 시도중
   signUpDone: false,
   signUpError: null,
+  logOutLoading: false, // 로그아웃 시도중
+  logOutDone: false,
+  logOutError: null,
   idValid: false,
   isLogIn: false,
   me:null,
@@ -73,6 +79,23 @@ const reducer = (state = initalState, action) =>
       case SIGNUP_FAILURE:
         draft.signUpLoading = false;
         draft.signUpError = action.error;
+        break;
+        
+        // 로그아웃
+      case LOGOUT_REQUEST:
+        draft.logOutLoading = true;
+        draft.logOutError = null;
+        draft.logOutDone = false;
+        break;
+      case LOGOUT_SUCCESS:
+        draft.isLogIn = false;
+        draft.logOutLoading = false;
+        draft.logOutDone = true;
+        draft.me = action.data;
+        break;
+      case LOGOUT_FAILURE:
+        draft.logOutLoading = false;
+        draft.logOutError = action.error;
         break;
 
       default:

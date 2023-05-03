@@ -10,6 +10,9 @@ import {
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE,
 } from "../constants/actionTypes";
 
 axios.defaults.withCredentials = true;
@@ -85,6 +88,21 @@ function* signUp(action){
   }
 }
 
+function* logOut(action){
+  try{
+    yield put({
+      type: LOGOUT_SUCCESS,
+      data: null,
+    })
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOGOUT_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function* watchCheckUserId() {
   yield takeLatest(CHECK_USER_ID_REQUEST, checkUserId);
 }
@@ -97,10 +115,15 @@ function* watchSignUp() {
   yield takeLatest(SIGNUP_REQUEST, signUp);
 }
 
+function* watchLogOut() {
+  yield takeLatest(LOGOUT_REQUEST, logOut);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchCheckUserId),
     fork(watchLogIn),
     fork(watchSignUp),
+    fork(watchLogOut),
   ]);
 }
