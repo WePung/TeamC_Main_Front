@@ -4,12 +4,37 @@ import {
   CHECK_USER_ID_REQUEST,
   CHECK_USER_ID_SUCCESS,
   CHECK_USER_ID_FAILURE,
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGIN_REQUEST,
 } from "../constants/actionTypes";
+
+axios.defaults.withCredentials = true;
 
 const checkUserIdAPI = (data) => {
   // console.log(data);
   return axios.get(`/user/idCheck?id=${data}`);
 };
+
+const logInAPI = (data) => {
+  return axios.post('http://localhost:4000/api/userInfo/login', data);
+}
+
+function* logIn(action){
+  try{
+    const result = yield call(logInAPI, action.data);
+    yield put({
+      type: LOGIN_SUCCESS,
+      data: action.data,
+    })
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOGIN_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
 
 function* checkUserId(action) {
   try {
@@ -32,6 +57,13 @@ function* watchCheckUserId() {
   yield takeLatest(CHECK_USER_ID_REQUEST, checkUserId);
 }
 
+function* watchLogIn() {
+  yield takeLatest(LOGIN_REQUEST, logIn);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchCheckUserId)]);
+  yield all([
+    fork(watchCheckUserId),
+    fork(watchLogIn)
+  ]);
 }
