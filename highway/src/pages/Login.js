@@ -14,6 +14,7 @@ import { LOGIN_REQUEST } from "../constants/actionTypes";
 
 const Login = () => {
   const {isLogIn} = useSelector((state)=>state.user);
+  const {me} = useSelector((state)=>state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,11 +28,14 @@ const Login = () => {
       data : body
     });
     // console.log("로그인 값: ", values);
+    navigate("/")
   };
 
   useEffect(()=>{
     console.log(isLogIn);
+    console.log(me);
   },[isLogIn])
+  
   return (
     <LoginWrapper>
       <LeftOutlined
