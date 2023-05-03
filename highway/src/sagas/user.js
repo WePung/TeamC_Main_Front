@@ -4,9 +4,12 @@ import {
   CHECK_USER_ID_REQUEST,
   CHECK_USER_ID_SUCCESS,
   CHECK_USER_ID_FAILURE,
+  LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGIN_REQUEST,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILURE,
 } from "../constants/actionTypes";
 
 axios.defaults.withCredentials = true;
@@ -17,16 +20,46 @@ const checkUserIdAPI = (data) => {
 };
 
 const logInAPI = (data) => {
-  return axios.post('http://localhost:4000/api/userInfo/login', data);
+  return axios.post('http://localhost:4000/api/userInfo/login', data).then((res)=>{
+    const userData = res.data;
+    return userData;
+  })
+}
+
+const signUpAPI = (data) => {
+  return axios.post('http://localhost:4000/api/userInfo/signUp',data);
+}
+
+function* checkUserId(action) {
+  try {
+    // console.log(action.data);
+    const result = yield call(checkUserIdAPI, action.data);
+    yield put({
+      type: CHECK_USER_ID_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: CHECK_USER_ID_FAILURE,
+      error: err.response.data,
+    });
+  }
 }
 
 function* logIn(action){
   try{
     const result = yield call(logInAPI, action.data);
-    yield put({
-      type: LOGIN_SUCCESS,
-      data: action.data,
-    })
+    if(result.password === action.data.password){
+      yield put({
+        type: LOGIN_SUCCESS,
+        data: result,
+      })
+    }else{
+      yield put({
+        type: LOGIN_FAILURE,
+      });
+    }
   } catch (err) {
     console.error(err);
     yield put({
@@ -36,18 +69,17 @@ function* logIn(action){
   }
 }
 
-function* checkUserId(action) {
-  try {
-    // console.log(action.data);
-    const result = yield call(checkUserIdAPI, action.data);
+function* signUp(action){
+  try{
+    const result = yield call(signUpAPI, action.data);
     yield put({
-      type: CHECK_USER_ID_SUCCESS,
-      data: result.data,
-    });
+      type: SIGNUP_SUCCESS,
+      data: action.data,
+    })
   } catch (err) {
     console.error(err);
     yield put({
-      type: CHECK_USER_ID_FAILURE,
+      type: SIGNUP_FAILURE,
       error: err.response.data,
     });
   }
@@ -61,9 +93,14 @@ function* watchLogIn() {
   yield takeLatest(LOGIN_REQUEST, logIn);
 }
 
+function* watchSignUp() {
+  yield takeLatest(SIGNUP_REQUEST, signUp);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchCheckUserId),
-    fork(watchLogIn)
+    fork(watchLogIn),
+    fork(watchSignUp),
   ]);
 }
