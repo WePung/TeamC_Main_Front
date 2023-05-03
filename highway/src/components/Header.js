@@ -1,7 +1,7 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import {useSelector} from "react-redux";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -23,10 +23,14 @@ const ProfileWrapper = styled.div`
   text-decoration: none;
   color: black;
 `;
-
 const Header = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false); //임시로 로그인 여부 상태 생성
   const {isLogIn} = useSelector((state)=>state.user);
+  const {me}= useSelector((state)=>state.user);
+
+  useEffect(()=>{
+    console.log(me);
+  },[isLogIn])
   return (
     <HeaderWrapper>
       <Title to="/">HIGHWAY</Title>
@@ -41,7 +45,7 @@ const Header = () => {
               icon={<UserOutlined />}
               style={{ marginRight: "5px" }}
             />
-            userid
+            {me.userName}
           </Link>
         ) : (
           <Link to="/login" style={{ float: "right" }}>
