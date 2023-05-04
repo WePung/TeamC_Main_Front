@@ -1,5 +1,5 @@
 import { AutoComplete, Button, Checkbox, Form, Radio } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CHECK_USER_ID_REQUEST, SIGNUP_REQUEST } from "../constants/actionTypes";
@@ -14,6 +14,7 @@ import {
 } from "../styles/SignUpStyle";
 import {
   agreeValidate,
+  idRegExp,
   validateEmail,
   validateId,
   validateNickname,
@@ -23,19 +24,24 @@ import { useSelector } from "react-redux";
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
   const [form] = Form.useForm();
+
+  const { idValid } = useSelector((state) => state.user);
+  useEffect(() => {
+    // console.log(idValid);
+  }, [idValid]);
 
   const onFinish = (values) => {
     const body = {
       userId : values.id,
+      userPw : values.password,
       userName : values.nickname,
-      password : values.password,
-      email : values.email,
-      gender : values.gender
+      userEmail : values.email,
+      userSex : values.gender,
+      userAge : 0
     }
-    console.log(values)
-    console.log("회원가입 데이터: ", values);
+    // console.log(values)
+    // console.log("회원가입 데이터: ", values);
     dispatch({
       type: SIGNUP_REQUEST,
       data: body
@@ -45,11 +51,17 @@ const SignUp = () => {
 
   const onCheckUserId = () => {
     const userIdValue = form.getFieldValue("id");
-    console.log(userIdValue);
-    dispatch({
-      type: CHECK_USER_ID_REQUEST,
-      data: userIdValue,
-    });
+    if (!userIdValue) {
+      alert("아이디를 입력해주세요");
+    } else if (!idRegExp.test(userIdValue)) {
+      alert("아이디는 1~20자이며 영어와 숫자 조합으로 입력해주세요");
+    } else {
+      dispatch({
+        type: CHECK_USER_ID_REQUEST,
+        data: userIdValue,
+      });
+      alert("사용가능한 아이디입니다.");
+    }
   };
 
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
@@ -86,11 +98,15 @@ const SignUp = () => {
           name="id"
           tooltip="아이디는 영어로 시작해여 숫자와의 조합으로 작성해주세요"
           rules={[{ validator: validateId }]}
+          hasFeedback
+          validateStatus={idValid ? "success" : "error"}
         >
           <SignUpInput allowClear placeholder="아이디를 입력해주세요" />
         </Form.Item>
         <Form.Item>
-          <Button onClick={onCheckUserId}>중복확인</Button>
+          <Button onClick={onCheckUserId} disabled={idValid}>
+            중복확인
+          </Button>
         </Form.Item>
         <label>비밀번호</label>
         <Form.Item

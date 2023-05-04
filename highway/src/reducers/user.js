@@ -42,7 +42,7 @@ const reducer = (state = initalState, action) =>
         draft.checkIdDone = false;
         break;
       case CHECK_USER_ID_SUCCESS:
-        draft.idValid = true;
+        draft.idValid = action.data;
         draft.checkIdLoading = false;
         draft.checkIdDone = true;
         break;

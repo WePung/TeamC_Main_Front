@@ -19,18 +19,15 @@ axios.defaults.withCredentials = true;
 
 const checkUserIdAPI = (data) => {
   // console.log(data);
-  return axios.get(`/user/idCheck?id=${data}`);
+  return axios.get(`/user/idCheck?userId=${data}`);
 };
 
 const logInAPI = (data) => {
-  return axios.post('http://localhost:4000/api/userInfo/login', data).then((res)=>{
-    const userData = res.data;
-    return userData;
-  })
+  return axios.get(`user/login?userId=${data.userId}&userPw=${data.userPw}`, data)
 }
 
 const signUpAPI = (data) => {
-  return axios.post('http://localhost:4000/api/userInfo/signUp',data);
+  return axios.post(`/user/join?userId=${data.userId}&userPw=${data.userPw}&userName=${data.userName}&userEmail=${data.userEmail}&userSex=${data.userSex}&userAge=${data.userAge}`);
 }
 
 function* checkUserId(action) {
@@ -53,16 +50,10 @@ function* checkUserId(action) {
 function* logIn(action){
   try{
     const result = yield call(logInAPI, action.data);
-    if(result.password === action.data.password){
       yield put({
         type: LOGIN_SUCCESS,
         data: result,
       })
-    }else{
-      yield put({
-        type: LOGIN_FAILURE,
-      });
-    }
   } catch (err) {
     console.error(err);
     yield put({

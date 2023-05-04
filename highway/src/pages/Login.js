@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { LeftOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Checkbox, Form } from "antd";
 import {
@@ -9,19 +9,17 @@ import {
   LoginMenu,
 } from "../styles/LoginStyle";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { LOGIN_REQUEST } from "../constants/actionTypes";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
-  const {isLogIn} = useSelector((state)=>state.user);
-  const {me} = useSelector((state)=>state.user);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const onFinish = (values) => {
     let body = {
       userId : values.id,
-      password: values.password
+      userPw: values.password
   }
     dispatch({
       type:LOGIN_REQUEST,
@@ -31,11 +29,6 @@ const Login = () => {
     navigate("/")
   };
 
-  useEffect(()=>{
-    console.log(isLogIn);
-    console.log(me);
-  },[isLogIn])
-  
   return (
     <LoginWrapper>
       <LeftOutlined
