@@ -52,7 +52,7 @@ function* logIn(action){
     const result = yield call(logInAPI, action.data);
       yield put({
         type: LOGIN_SUCCESS,
-        data: result,
+        data: action.data,
       })
   } catch (err) {
     console.error(err);
