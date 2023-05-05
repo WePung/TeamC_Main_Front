@@ -38,8 +38,6 @@ const Header = () => {
   }
 
   useEffect(()=>{
-    console.log(isLogIn)
-    console.log(me);
   },[isLogIn])
   return (
     <HeaderWrapper>
