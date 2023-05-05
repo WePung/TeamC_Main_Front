@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { LeftOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Checkbox, Form } from "antd";
 import {
@@ -10,9 +10,10 @@ import {
 } from "../styles/LoginStyle";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_REQUEST } from "../constants/actionTypes";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
+  const {isLogIn} = useSelector((state)=>state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,8 +27,12 @@ const Login = () => {
       data : body
     });
     // console.log("로그인 값: ", values);
-    navigate("/")
+    if(isLogIn){
+      navigate("/");
+    }
   };
+
+  useEffect(()=>{},[isLogIn])
 
   return (
     <LoginWrapper>
