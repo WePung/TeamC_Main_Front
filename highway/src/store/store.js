@@ -3,7 +3,6 @@ import {
   applyMiddleware,
   compose,
 } from "redux";
-import { legacy_createStore as createStore, applyMiddleware, compose } from "redux";
 import rootSaga from "../sagas";
 import rootReducer from "../reducers";
 import createSagaMiddleware from "redux-saga";
