@@ -80,7 +80,7 @@ const SignUp = () => {
         }}
         scrollToFirstError
       >
-        <h2>회원가입</h2>
+        <h2>재학생 회원가입</h2>
         <label>아이디</label>
 
         <Form.Item
