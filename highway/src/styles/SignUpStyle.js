@@ -54,3 +54,10 @@ export const CancelBtn = styled(Button)`
   height: 3rem;
   display: inline-block;
 `;
+export const BackToLogin = styled(Button)`
+  width: 40%;
+  margin-top : 7%;
+  height: 3rem;
+  background-color: #8282ff;
+  font-weight: 700;
+`
