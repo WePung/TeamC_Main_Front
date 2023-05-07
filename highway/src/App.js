@@ -11,6 +11,7 @@ import Search from "./pages/Search";
 import SignUp from "./pages/SignUp";
 import StudentSignUp from "./pages/StudentSignUp";
 import UserProfile from "./pages/UserProfile";
+import JoinPresenter from "./pages/JoinPresenter";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/joinpresenter" element={<JoinPresenter />} />
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/profile" element={<UserProfile />} />
           <Route exact path="/signup/student" element={<StudentSignUp />} />
