@@ -1,8 +1,9 @@
-export const newsList = [
+export const NewsDummyData = [
     {
         newsId : 1,
         newsTitle : "당신의 '아침 루틴' 궁금하다",
         newsContent : "뉴스 기사",
+        writer : "HIGHWAY TIMES",
         src :"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
         newsViews: 132,
     },
@@ -10,6 +11,7 @@ export const newsList = [
         newsId : 2,
         newsTitle : "당신의 '교복 스탠다드' 궁금하다",
         newsContent : "뉴스 기사",
+        writer : "HIGHWAY TIMES",
         src : "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
         newsViews: 10,
     },
@@ -17,6 +19,7 @@ export const newsList = [
         newsId : 3,
         newsTitle : "당신의 '스터디 스타일' 궁금하다",
         newsContent : "뉴스 기사",
+        writer : "HIGHWAY TIMES",
         src : "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
         newsViews: 12,
     },
@@ -24,6 +27,7 @@ export const newsList = [
         newsId : 4,
         newsTitle : "당신의 '직업 적성' 궁금하다",
         newsContent : "뉴스 기사",
+        writer : "HIGHWAY TIMES",
         src : "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
         newsViews: 15,
     },
@@ -31,6 +35,7 @@ export const newsList = [
         newsId : 5,
         newsTitle : "당신의 '취미 생활' 궁금하다",
         newsContent : "뉴스 기사",
+        writer : "HIGHWAY TIMES",
         src : "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
         newsViews: 16,
     },
@@ -38,9 +43,10 @@ export const newsList = [
         newsId : 6,
         newsTitle : "당신의 '등교 루트' 궁금하다",
         newsContent : "뉴스 기사",
+        writer : "HIGHWAY TIMES",
         src : "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
         newsViews: 17,
     },
 ]
 
-export default newsList;
+export default NewsDummyData;
