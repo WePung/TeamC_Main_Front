@@ -22,6 +22,7 @@ import Terms from "./pages/Terms";
 import PromotionNews from "./components/Promotion/PromotionNews";
 import PromotionVideos from "./components/Promotion/PromotionVideos";
 import PromotionNewsDetail from "./components/Promotion/PromotionNewsDetail";
+import PromotionVideoDetail from "./components/Promotion/PromotionVideoDetail";
 
 function App() {
   return (
@@ -39,11 +40,11 @@ function App() {
             <Route exact path="/" element={<Home />} />
             <Route exact path="/search" element={<Search />} />
             <Route exact path="/promotion" element={<Promotion />}>
-              <Route exact path="/promotion/news" element={<PromotionNews />}>
-              </Route>
+              <Route exact path="/promotion/news" element={<PromotionNews />} />
               <Route exact path="/promotion/videos" element={<PromotionVideos />} />
             </Route>
             <Route exact path="/promotion/news/:newsId" element={<PromotionNewsDetail />} />
+            <Route exact path="/promotion/videos/:videoId" element={<PromotionVideoDetail />} />
             <Route exact path="/schoolranking" element={<SchoolRanking />} />
             <Route exact path="/schooldetail/:schoolId" element={<SchoolDetail />}>
               <Route>
